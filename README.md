@@ -32,6 +32,10 @@ Regras de negocio:
 - Os alunos aprovados tem media de notas maior do que 7.
 - A entrada e saida de dados devera ser em JSON.
 
+#Instruçoes
+Ao fazer um cadastro, siga as instruçoes na documentacao, informe apenas que esta descrito
+na documentaçao.
+
 # Tecnologias
 
 Quarkus, framework do Java.
