@@ -15,10 +15,8 @@ public class RespostaParser {
 	public RespostaDto dto(Resposta entidade){
 		RespostaDto dto = new RespostaDto();
 
-		dto.setId(entidade.getId());
 		dto.setIdProva(entidade.getProva().getId());
 		dto.setMatricula(entidade.getAluno().getMatricula());
-		dto.setNota(entidade.getNota());
 		dto.setSolucao(entidade.getSolucao());
 		
 		return dto;
@@ -27,10 +25,8 @@ public class RespostaParser {
 	public Resposta entidade(RespostaDto dto){
 		Resposta entidade = new Resposta();
 
-		entidade.setId(dto.getId());
 		entidade.setProva(new Prova(dto.getIdProva()));
 		entidade.setAluno(new Aluno(dto.getMatricula()));
-		entidade.setNota(dto.getNota());
 		entidade.setSolucao(dto.getSolucao());
 		
 		return entidade;

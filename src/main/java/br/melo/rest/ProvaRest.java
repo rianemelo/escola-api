@@ -5,6 +5,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
+import br.melo.dto.ProvaDto;
 import br.melo.exception.EscolaException;
 import br.melo.model.Prova;
 import br.melo.service.ProvaService;
@@ -51,12 +52,12 @@ public class ProvaRest {
 	description = "prova",
 	content = {
 			@Content(mediaType =  "application/json",
-			schema = @Schema(implementation = Prova.class))
+			schema = @Schema(implementation = ProvaDto.class))
 			}
 	)
-	public Response cadastrar(Prova prova) {
+	public Response cadastrar(ProvaDto provaDto) {
 		try {
-			service.cadastrar(prova);
+			service.cadastrar(provaDto);
 			return Response.status(Status.CREATED).build();
 		} catch (EscolaException e) {
 			return Response.status(Status.BAD_REQUEST).entity(e).build();

@@ -22,7 +22,7 @@ public class AlunoDao {
     
     public List<Aluno> listarAprov() {  	
     	Float media = 7F;
-    	return Aluno.list("media > ?1", media);
+    	return Aluno.list("media >= ?1", media);
 	}
     
     @Transactional

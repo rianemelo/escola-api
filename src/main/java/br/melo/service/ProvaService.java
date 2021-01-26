@@ -9,8 +9,10 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 import br.melo.dao.ProvaDao;
+import br.melo.dto.ProvaDto;
 import br.melo.exception.EscolaException;
 import br.melo.model.Prova;
+import br.melo.model.parser.ProvaParser;
 
 
 @RequestScoped
@@ -39,23 +41,25 @@ public class ProvaService {
 	}
 	
 	@Transactional(rollbackOn = Exception.class) 
-	public void cadastrar(Prova prova) throws EscolaException {
-		validar(prova);
+	public void cadastrar(ProvaDto provaDto) throws EscolaException {
+		validar(provaDto);
+		
+		Prova prova = ProvaParser.get().entidade(provaDto);
 		prova.setAlunos(0L);
 
 		dao.cadastrar(prova);
 	}
 
-	public void validar(Prova prova) throws EscolaException {
-		if ( prova.getGabarito().length() == 0 || prova.getPeso().length() == 0) {
+	public void validar(ProvaDto provaDto) throws EscolaException {
+		if ( provaDto.getGabarito().length() == 0 || provaDto.getPeso().length() == 0) {
 			throw new EscolaException("Formato inválido! Preencha todos os campos.");
 		}
 
-		prova.setGabarito(prova.getGabarito().replaceAll("\\s","").toUpperCase());
-		prova.setPeso(prova.getPeso().replaceAll("\\s",""));
+		provaDto.setGabarito(provaDto.getGabarito().replaceAll("\\s","").toUpperCase());
+		provaDto.setPeso(provaDto.getPeso().replaceAll("\\s",""));
 		
-		String[] gabaritoArray = prova.getGabarito().split(",");		
-		String[] pesoArray = prova.getPeso().split(",");
+		String[] gabaritoArray = provaDto.getGabarito().split(",");		
+		String[] pesoArray = provaDto.getPeso().split(",");
 		
 		Float soma = 0F;
 

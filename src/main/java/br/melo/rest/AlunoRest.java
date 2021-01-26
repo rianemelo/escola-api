@@ -6,9 +6,9 @@ import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
+import br.melo.dto.AlunoDto;
 import br.melo.exception.EscolaException;
 import br.melo.model.Aluno;
-import br.melo.model.Prova;
 import br.melo.service.AlunoService;
 
 import javax.inject.Inject;
@@ -60,6 +60,9 @@ public class AlunoRest {
 	public Response buscarAluno(@PathParam("matricula") String matricula) throws EscolaException {		
 		try {
 			Aluno aluno = service.buscarAluno(matricula);
+			if ( aluno.getMedia() == -1F ) {
+				throw new EscolaException("Aluno ainda não fez nenhuma prova!");
+			}
 			return Response.status(Status.OK).entity(aluno).build();
 		} catch (EscolaException e) {
 			return Response.status(Status.NOT_FOUND).entity(e).build();
@@ -91,12 +94,12 @@ public class AlunoRest {
 	description = "prova",
 	content = {
 			@Content(mediaType =  "application/json",
-					schema = @Schema(implementation = Prova.class))
+					schema = @Schema(implementation = AlunoDto.class))
 			}
 	)
-	public Response cadastrar(Aluno aluno) {
+	public Response cadastrar(AlunoDto alunoDto) {
 		try {
-			service.cadastrar(aluno);
+			service.cadastrar(alunoDto);
 			return Response.status(Status.CREATED).build();
 		} catch (EscolaException e) {
 			return Response.status(Status.METHOD_NOT_ALLOWED).entity(e).build();

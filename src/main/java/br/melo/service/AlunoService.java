@@ -10,8 +10,10 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 import br.melo.dao.AlunoDao;
+import br.melo.dto.AlunoDto;
 import br.melo.exception.EscolaException;
 import br.melo.model.Aluno;
+import br.melo.model.parser.AlunoParser;
 
 
 @RequestScoped
@@ -39,7 +41,8 @@ public class AlunoService {
 	}
 	
 	@Transactional(rollbackOn = Exception.class) 
-	public void cadastrar(Aluno aluno) throws EscolaException {
+	public void cadastrar(AlunoDto alunoDto) throws EscolaException {
+		Aluno aluno = AlunoParser.get().entidade(alunoDto);
 		aluno.setMedia(-1F);
 		dao.cadastrar(aluno);
 	}

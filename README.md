@@ -32,9 +32,22 @@ Regras de negocio:
 - Os alunos aprovados tem media de notas maior do que 7.
 - A entrada e saida de dados devera ser em JSON.
 
-#Instruçoes
-Ao fazer um cadastro, siga as instruçoes na documentacao, informe apenas que esta descrito
-na documentaçao.
+# Instrucoes
+
+Temos 3 entidades: aluno, prova e resposta (a resposta de um determinado aluno 
+para uma determinada prova). Portanto, para se cadastrar uma resposta
+e preciso ter os ids do aluno, que no nosso caso e a matricula, e o id da prova, ou seja, 
+cadastrar o aluno e a prova previamente.
+
+Em escola-api\src\main\resources esta o file de configuracao do projeto 
+application.properties. Para que o banco de dados nao seja "dropado" a cada vez
+que a aplicacao compilar, comente (com #) a 10a linha: 
+
+"quarkus.hibernate-orm.database.generation=drop-and-create"
+
+e descomente 11a, linha que permite atualizacoes: 
+
+"quarkus.hibernate-orm.database.generation=update" .
 
 # Tecnologias
 
